@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Missing Person</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Find a Missing Person</h1>
+</header>
+
+<section>
+    <!-- Remove image upload field -->
+    <form id="find-person-form">
+        <h2>Search by Physical Characteristics</h2>
+
+        <label for="eyeColor">Eye Color:</label>
+        <select id="eyeColor" name="eyeColor">
+            <option value="">Any</option>
+            <option value="brown">Brown</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+        </select>
+
+        <label for="hairColor">Hair Color:</label>
+        <select id="hairColor" name="hairColor">
+            <option value="">Any</option>
+            <option value="black">Black</option>
+            <option value="brown">Brown</option>
+            <option value="blonde">Blonde</option>
+        </select>
+
+        <div class="height-range">
+            <label>Height Range (cm):</label>
+            <div>
+                <input type="number" id="minHeight" placeholder="Min" min="100" max="250">
+                <span>to</span>
+                <input type="number" id="maxHeight" placeholder="Max" min="100" max="250">
+            </div>
+        </div>
+
+        <button type="submit">Search</button>
+    </form>
+</section>
+
+<footer>
+    <button onclick="window.location.href='index.html'">Go Back</button>
+</footer>
+
+</body>
+</html>

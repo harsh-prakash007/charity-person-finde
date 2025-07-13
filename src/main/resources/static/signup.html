@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        background: url('https://www.shutterstock.com/image-photo/happy-little-boy-running-his-600nw-1832270128.jpg') no-repeat center center fixed;
+        background-size: cover;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+    }
+
+    .form-container {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .form-container h2 {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 7px;
+        margin-bottom: 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: #fff;
+        font-size: 0.9rem;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .form-container .switch {
+        text-align: center;
+        margin-top: 12px;
+        color: #fff;
+    }
+
+    .form-container .switch a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .form-container .switch a:hover {
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Sign Up</h2>
+
+  <!-- This form submits directly to /signup/send-otp -->
+  <form method="POST" action="/signup/send-otp">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required />
+
+    <button type="submit">Verify OTP</button>
+
+    <div class="switch">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.shutterstock.com/image-photo/happy-little-boy-running-his-600nw-1832270128.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        #results-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .results-controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .results-controls select,
+        .results-controls button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .results-controls select {
+            background-color: white;
+            color: #333;
+            min-width: 150px;
+        }
+
+        .results-controls button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .results-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        #results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .result-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+            transition: transform 0.3s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .person-photo {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .person-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .person-details {
+            padding: 1.5rem;
+        }
+
+        .person-details h3 {
+            margin-bottom: 0.5rem;
+            color: #007bff;
+        }
+
+        .person-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .contact-btn:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .results-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #results-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Search Results</h1>
+</header>
+
+<section id="results-section">
+    <h2>Matching Results</h2>
+
+    <div class="results-controls">
+        <select id="sort-by">
+            <option value="">Sort By</option>
+            <option value="height">Height</option>
+            <option value="age">Age</option>
+            <option value="name">Name</option>
+        </select>
+        <button id="filter-btn">More Filters</button>
+    </div>
+
+    <div id="results-container">
+        <!-- Results will be populated here by JavaScript -->
+    </div>
+</section>
+
+<footer>
+    <p>Thank you for helping us!</p>
+</footer>
+
+<script>
+    // Sample data - replace with your actual data from backend
+    const sampleData = [
+        {
+            id: 1,
+            name: "John Doe",
+            age: 25,
+            height: 175,
+            eyeColor: "brown",
+            hairColor: "black",
+            lastSeenLocation: "Central Park, NY",
+            contactInfo: "contact@example.com",
+            photo: "https://randomuser.me/api/portraits/men/1.jpg"
+        },
+        {
+            id: 2,
+            name: "Jane Smith",
+            age: 30,
+            height: 165,
+            eyeColor: "blue",
+            hairColor: "blonde",
+            lastSeenLocation: "Downtown LA",
+            contactInfo: "help@example.org",
+            photo: "https://randomuser.me/api/portraits/women/1.jpg"
+        },
+        {
+            id: 3,
+            name: "Mike Johnson",
+            age: 22,
+            height: 180,
+            eyeColor: "green",
+            hairColor: "brown",
+            lastSeenLocation: "Chicago Suburbs",
+            contactInfo: "missing@help.com",
+            photo: "https://randomuser.me/api/portraits/men/2.jpg"
+        }
+    ];
+
+    // Display results function
+    function displayResults(persons) {
+        const container = document.getElementById('results-container');
+        container.innerHTML = '';
+
+        if (persons.length === 0) {
+            container.innerHTML = '<p class="no-results" style="grid-column:1/-1;text-align:center;padding:2rem;background:rgba(255,255,255,0.9);border-radius:8px;color:#333;">No matching persons found. Try different search criteria.</p>';
+            return;
+        }
+
+        persons.forEach(person => {
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.dataset.height = person.height;
+            card.dataset.age = person.age;
+            card.dataset.name = person.name;
+
+            card.innerHTML = `
+                <div class="person-photo">
+                    <img src="${person.photo}" alt="${person.name}">
+                </div>
+                <div class="person-details">
+                    <h3>${person.name}</h3>
+                    <p><strong>Age:</strong> ${person.age}</p>
+                    <p><strong>Height:</strong> ${person.height} cm</p>
+                    <p><strong>Eye Color:</strong> ${person.eyeColor}</p>
+                    <p><strong>Hair Color:</strong> ${person.hairColor}</p>
+                    <p><strong>Last Seen:</strong> ${person.lastSeenLocation}</p>
+                    <a href="mailto:${person.contactInfo}" class="contact-btn">Contact</a>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    // Sort functionality
+    document.getElementById('sort-by').addEventListener('change', function() {
+        const sortBy = this.value;
+        if (sortBy) {
+            sortResults(sortBy);
+        }
+    });
+
+    function sortResults(sortBy) {
+        const container = document.getElementById('results-container');
+        const cards = Array.from(container.getElementsByClassName('result-card'));
+
+        cards.sort((a, b) => {
+            const aValue = a.dataset[sortBy];
+            const bValue = b.dataset[sortBy];
+
+            if (sortBy === 'height' || sortBy === 'age') {
+                return parseInt(aValue) - parseInt(bValue);
+            }
+            return aValue.localeCompare(bValue);
+        });
+
+        cards.forEach(card => container.appendChild(card));
+    }
+
+    // Filter button functionality
+    document.getElementById('filter-btn').addEventListener('click', function() {
+        alert('Additional filter functionality would be implemented here');
+        // This would typically open a modal with more filter options
+    });
+
+    // Initialize with sample data
+    document.addEventListener('DOMContentLoaded', function() {
+        displayResults(sampleData);
+    });
+</script>
+</body>
+</html>

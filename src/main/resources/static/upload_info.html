@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Information</title>
+    <style>
+        body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-family: Arial, sans-serif;
+          background: url("https://www.shutterstock.com/image-photo/happy-little-boy-running-his-600nw-1832270128.jpg")
+            no-repeat center center fixed;
+          background-size: cover;
+          height: 100vh;
+          margin: 0;
+          color: #fff;
+        }
+
+        .form-container {
+          background-color: rgba(0, 0, 0, 0.7);
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+          width: 100%;
+          max-width: 600px;
+          margin-top: 170px;
+        }
+
+        .form-container h2 {
+          margin-bottom: 20px;
+          text-align: center;
+        }
+
+        .form-section {
+          display: flex;
+          gap: 30px;
+        }
+
+        .form-section div {
+          flex: 1;
+        }
+
+        .form-container label {
+          display: block;
+          margin-bottom: 5px;
+          color: #fff;
+        }
+
+        .form-container input,
+        .form-container textarea {
+          width: 100%;
+          padding: 6px;
+          margin-bottom: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #fff;
+          font-size: 0.8rem;
+        }
+
+        .form-container button {
+          width: 100%;
+          padding: 8px;
+          border: none;
+          border-radius: 5px;
+          background-color: #007bff;
+          color: #fff;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+          background-color: #0056b3;
+        }
+
+        .image-preview {
+          width: 100%;
+          height: 250px;
+          background: url("https://static.vecteezy.com/system/resources/previews/014/554/760/original/man-profile-negative-photo-anonymous-silhouette-human-head-businessman-worker-support-illustration-vector.jpg")
+            center center/contain no-repeat;
+          margin-bottom: 15px;
+          border: 1px solid #fff;
+          border-radius: 5px;
+          overflow: hidden;
+        }
+
+        .image-preview img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Upload Information</h2>
+    <form
+            action="/upload"
+            method="POST"
+            onsubmit="submitfrom"
+            enctype="multipart/form-data"
+    >
+        <div class="form-section">
+            <div>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required />
+
+                <label for="height">Height (in cm):</label>
+                <input type="number" id="height" name="height" required />
+
+                <label for="skinColor">Skin Color:</label>
+                <input type="text" id="skinColor" name="skinColor" required />
+            </div>
+
+            <div>
+                <label for="hairColor">Hair Color:</label>
+                <input type="text" id="hairColor" name="hairColor" required />
+
+                <label for="eyeColor">Eye Color:</label>
+                <input type="text" id="eyeColor" name="eyeColor" required />
+
+                <label for="birthMark">Birth Mark:</label>
+                <textarea
+                        id="birthMark"
+                        name="birthMark"
+                        rows="2"
+                        required
+                ></textarea>
+
+                <label for="disability">Disability (if any):</label>
+                <textarea id="disability" name="disability" rows="2"></textarea>
+            </div>
+        </div>
+
+        <label for="contactInfo">Contact Information:</label>
+        <input type="text" id="contactInfo" name="contactInfo" required />
+
+        <label for="reward">Reward (if applicable):</label>
+        <input type="text" id="reward" name="reward" />
+
+        <div class="image-preview" id="imagePreview">
+            <img id="uploadedImage" alt="Uploaded Preview" />
+        </div>
+
+        <label for="image">Upload Image:</label>
+        <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onchange="previewImage(event)"
+                required
+        />
+
+        <button type="submit">Submit Information</button>
+    </form>
+</div>
+<script src="script.js"></script>
+
+<script>
+    function previewImage(event) {
+      const input = event.target;
+      const previewContainer = document.getElementById("imagePreview");
+      const previewImage = document.getElementById("uploadedImage");
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = "block";
+          previewContainer.style.background = "none";
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+</script>
+</body>
+</html>
